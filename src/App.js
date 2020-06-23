@@ -1,5 +1,6 @@
 import React from 'react';
-import {Container, Row, Col, Button, Media, Alert } from 'react-bootstrap';
+import {Container, Row, Col, Button, Media, Alert, Card } from 'react-bootstrap';
+import './App.css';
 
 
 class App extends React.Component {
@@ -50,14 +51,14 @@ class App extends React.Component {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col>
+          <Col md={{span: 8, offset: 2}}>
             <span className="h4">Orden: </span>
             <Button variant="outline-primary mr-2">Ascendente</Button>
             <Button variant="primary">Descendente</Button>
           </Col>
         </Row>
         {data.map((date) =>
-          <Row className="justify-content-md-center mt-4">
+          <Row className="justify-content-md-center mt-4" key={date.id}>
             <Col md={8}>
               <ul className="list-unstyled">
                 <Media as="li">
@@ -68,6 +69,21 @@ class App extends React.Component {
                     src={date.post_image_url}
                     alt="Generic placeholder"
                   />
+                  <Row>
+                    <Col>
+                      <Card border="light" style={{ width: '8rem' }}>
+                        <Card.Body>
+                          <Card.Text>
+                            <a className="question-upvote">
+                              <span className="upvote-arrow"></span>
+                              <span className="upvote-count">{date.votes}</span>
+                              <span className="downvote-arrow"></span>
+                            </a>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </Row>
                   <Media.Body>
                     <Alert.Link href={date.url}>{date.title}</Alert.Link>
                     <p>
