@@ -82,18 +82,18 @@ class App extends React.Component {
                       <Card border="light" style={{ width: '8rem' }}>
                         <Card.Body>
                           <Card.Text>
-                            <a className="question-upvote">
-                              <span className="upvote-arrow"></span>
+                            <span className="question-upvote">
+                              <span className="upvote-arrow" onClick={() => this.botonup(date.id)}></span>
                               <span className="upvote-count">{date.votes}</span>
-                              <span className="downvote-arrow"></span>
-                            </a>
+                              <span className="downvote-arrow" onClick={() => this.botondown(date.id)}></span>
+                            </span>
                           </Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
                   </Row>
                   <Media.Body>
-                    <Alert.Link href={date.url}>{date.title}</Alert.Link>
+                    <Alert.Link href={date.url} target="_blank">{date.title}</Alert.Link>
                     <p>
                       {date.description}
                     </p>
@@ -122,18 +122,67 @@ class App extends React.Component {
       asce: "primary mr-2",
       desce: "outline-primary",
       data: this.state.data.sort(function(a ,b){
-        return a.votes - b.votes
+        return b.votes - a.votes
       })
     })
   }
+
   boton2() {
     this.setState({
       asce: "outline-primary mr-2",
       desce: "primary",
       data: this.state.data.sort(function(a ,b){
-        return b.votes - a.votes
+        return a.votes - b.votes
       })
     })
+  }
+
+  botonup(id) {
+    const {data: data_old } = this.state;
+    data_old.map(p => {
+      if (p.id === id) {
+        p.votes += 1;
+        return p;
+      }
+      return p;
+    });
+    if(this.state.asce === "primary mr-2"){
+      this.setState({
+        data: this.state.data.sort(function(a ,b){
+            return b.votes - a.votes
+        })
+      });
+    }else {
+      this.setState({
+        data: this.state.data.sort(function(a ,b){
+            return a.votes - b.votes
+        })
+      });
+    }
+  }
+
+  botondown(id) {
+    const {data: data_old } = this.state;
+    data_old.map(p => {
+      if (p.id === id) {
+        p.votes -= 1;
+        return p;
+      }
+      return p;
+    });
+    if(this.state.asce === "primary mr-2"){
+      this.setState({
+        data: this.state.data.sort(function(a ,b){
+            return b.votes - a.votes
+        })
+      });
+    }else {
+      this.setState({
+        data: this.state.data.sort(function(a ,b){
+            return a.votes - b.votes
+        })
+      });
+    }
   }
 }
 
